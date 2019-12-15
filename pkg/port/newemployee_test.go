@@ -14,6 +14,7 @@ import (
 
 func TestNewEmployeeAsEmployee(t *testing.T) {
 	t.Run("memory_fixture", func(t *testing.T) {
+		// t.Parallel()
 		// GIVEN
 		newEmployee := aNewEmployeeDaenerys()
 		want := &domain.Employee{
@@ -36,10 +37,12 @@ func TestNewEmployeeAsEmployee(t *testing.T) {
 		// WHEN
 		got := newEmployee.AsEmployee()
 		want.ID = got.ID
+		// time.Sleep(1 * time.Second)
 		// THEN
 		assert.Equal(t, want, got)
 	})
-	t.Run("file_fixture", func(t *testing.T) {
+	t.Run("file_fixture_hound", func(t *testing.T) {
+		// t.Parallel()
 		// GIVEN
 		newEmployee := buildEmployeeFromFileHelper(t, "the_hound_employee.json")
 		want := &domain.Employee{
@@ -62,6 +65,35 @@ func TestNewEmployeeAsEmployee(t *testing.T) {
 		// WHEN
 		got := newEmployee.AsEmployee()
 		want.ID = got.ID
+		// time.Sleep(1 * time.Second)
+		// THEN
+		assert.Equal(t, want, got)
+	})
+	t.Run("file_fixture_mountain", func(t *testing.T) {
+		// t.Parallel()
+		// GIVEN
+		newEmployee := buildEmployeeFromFileHelper(t, "the_mountain_employee.json")
+		want := &domain.Employee{
+			FirstName: "Gregor",
+			LastName:  "Clegane",
+			Salary:    200,
+			Address: &domain.Address{
+				Street:  "House Clegane",
+				City:    "King's Landing",
+				State:   "Capital",
+				ZipCode: "20022",
+			},
+			Job: &domain.Job{
+				Code:      "234",
+				Name:      "Bodyguard",
+				Area:      "King's guard",
+				Deparment: "Castle",
+			},
+		}
+		// WHEN
+		got := newEmployee.AsEmployee()
+		want.ID = got.ID
+		// time.Sleep(1 * time.Second)
 		// THEN
 		assert.Equal(t, want, got)
 	})

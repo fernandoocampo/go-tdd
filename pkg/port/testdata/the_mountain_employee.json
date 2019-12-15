@@ -1,0 +1,15 @@
+{
+    "names": {
+        "firstname": "Gregor",
+        "lastname": "Clegane"
+    },
+    "salary": 200,
+    "jobid": "234",
+    "job": "Bodyguard",
+    "jobarea": "King's guard",
+    "jobdepartment": "Castle",
+    "street": "House Clegane",
+    "city": "King's Landing",
+    "state": "Capital",
+    "zip": "20022"
+}
