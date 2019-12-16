@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/fernandoocampo/go-tdd/pkg/domain"
+	"github.com/google/uuid"
 )
 
 // basicEmployeeService implements employee service
@@ -19,6 +20,8 @@ func NewBasicEmployeeSerive(newRepository domain.EmployeeRepository) EmployeeSer
 }
 
 // Add validates and save a new employee.
-func (b *basicEmployeeService) Add(ctx context.Context, newemployee domain.Employee) error {
-	return b.repository.Save(ctx, newemployee)
+func (b *basicEmployeeService) Add(ctx context.Context, newemployee domain.Employee) (string, error) {
+	newemployee.ID = uuid.New().String()
+	err := b.repository.Save(ctx, newemployee)
+	return newemployee.ID, err
 }

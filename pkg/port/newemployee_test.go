@@ -35,7 +35,6 @@ func TestNewEmployeeAsEmployee(t *testing.T) {
 		}
 		// WHEN
 		got := newEmployee.AsEmployee()
-		want.ID = got.ID
 		// THEN
 		assert.Equal(t, want, got)
 	})
@@ -61,7 +60,6 @@ func TestNewEmployeeAsEmployee(t *testing.T) {
 		}
 		// WHEN
 		got := newEmployee.AsEmployee()
-		want.ID = got.ID
 		// THEN
 		assert.Equal(t, want, got)
 	})
