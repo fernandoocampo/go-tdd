@@ -21,6 +21,7 @@ type Employee struct {
 	ID        string
 	FirstName string
 	LastName  string
+	Email     string
 	Salary    int64
 	Job       *Job
 	Address   *Address

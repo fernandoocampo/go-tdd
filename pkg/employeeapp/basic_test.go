@@ -6,6 +6,7 @@ import (
 
 	"github.com/fernandoocampo/go-tdd/pkg/domain"
 	"github.com/fernandoocampo/go-tdd/pkg/employeeapp"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -15,7 +16,7 @@ func TestAddEmployee(t *testing.T) {
 		ctx := context.TODO()
 		newRepo := aEmployeeRepoMock()
 		newEmployee := aNewEmployeeDaenerys()
-		basicService := employeeapp.NewBasicEmployeeService(newRepo)
+		basicService := employeeapp.NewBasicService(newRepo)
 		// WHEN
 		got, err := basicService.Add(ctx, newEmployee)
 		// THEN
@@ -39,7 +40,7 @@ func TestAddEmployee(t *testing.T) {
 		newEmployee := aNewEmployeeDaenerys()
 		// setup expectations
 		newRepo.On("Save", mock.AnythingOfType("*context.emptyCtx"), mock.AnythingOfType("Employee")).Return(nil)
-		basicService := employeeapp.NewBasicEmployeeService(newRepo)
+		basicService := employeeapp.NewBasicService(newRepo)
 		// WHEN
 		got, err := basicService.Add(ctx, newEmployee)
 		// THEN
@@ -53,6 +54,31 @@ func TestAddEmployee(t *testing.T) {
 			t.Errorf("expected an ID with value but got empty ID")
 		}
 	})
+}
+
+func TestEmailNotification(t *testing.T) {
+	// GIVEN
+	newEmployee := aNewEmployeeDaenerys()
+	newEmployee.Email = "someone@somewhere.com"
+	expectedMessage := domain.Message{
+		Subject: "Hey",
+		To:      "someone@somewhere.com",
+		From:    "anybody@somewhere.com",
+		Body:    "Good morning there",
+	}
+	ctx := context.TODO()
+	emailNotifier := NewEmailNotifierMock()
+	newRepo := aEmployeeRepoMock()
+	basicService := employeeapp.NewBasicServiceWithNotifier(newRepo, emailNotifier)
+
+	// WHEN
+	_, err := basicService.Add(ctx, newEmployee)
+	// THEN
+	if err != nil {
+		t.Errorf("no error was expected but got: %q", err)
+	}
+
+	assert.Equal(t, expectedMessage, emailNotifier.messages[0])
 }
 
 func aNewEmployeeDaenerys() domain.Employee {
@@ -88,6 +114,28 @@ func aEmployeeRepoMock() domain.EmployeeRepository {
 		return nil
 	}
 	return t
+}
+
+// emailNotifierMock is a domain.Notifier mock that track
+// received messages
+type emailNotifierMock struct {
+	err      error
+	messages []domain.Message
+}
+
+func NewEmailNotifierMock() *emailNotifierMock {
+	return &emailNotifierMock{
+		messages: make([]domain.Message, 0),
+	}
+}
+
+// Notify adds the given message to the messages map contained in the mock.
+func (e *emailNotifierMock) Notify(ctx context.Context, message domain.Message) error {
+	if e.err != nil {
+		return e.err
+	}
+	e.messages = append(e.messages, message)
+	return nil
 }
 
 // protoRepo mocks a employee repository.
