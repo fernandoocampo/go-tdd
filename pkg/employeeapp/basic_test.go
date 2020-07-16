@@ -15,7 +15,7 @@ func TestAddEmployee(t *testing.T) {
 		ctx := context.TODO()
 		newRepo := aEmployeeRepoMock()
 		newEmployee := aNewEmployeeDaenerys()
-		basicService := employeeapp.NewBasicEmployeeSerive(newRepo)
+		basicService := employeeapp.NewBasicEmployeeService(newRepo)
 		// WHEN
 		got, err := basicService.Add(ctx, newEmployee)
 		// THEN
@@ -39,7 +39,7 @@ func TestAddEmployee(t *testing.T) {
 		newEmployee := aNewEmployeeDaenerys()
 		// setup expectations
 		newRepo.On("Save", mock.AnythingOfType("*context.emptyCtx"), mock.AnythingOfType("Employee")).Return(nil)
-		basicService := employeeapp.NewBasicEmployeeSerive(newRepo)
+		basicService := employeeapp.NewBasicEmployeeService(newRepo)
 		// WHEN
 		got, err := basicService.Add(ctx, newEmployee)
 		// THEN

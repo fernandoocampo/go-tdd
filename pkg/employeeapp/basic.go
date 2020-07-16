@@ -12,8 +12,8 @@ type basicEmployeeService struct {
 	repository domain.EmployeeRepository
 }
 
-// NewBasicEmployeeSerive creates a employee service using basic employee service impl.
-func NewBasicEmployeeSerive(newRepository domain.EmployeeRepository) EmployeeService {
+// NewBasicEmployeeService creates a employee service using basic employee service impl.
+func NewBasicEmployeeService(newRepository domain.EmployeeRepository) Service {
 	return &basicEmployeeService{
 		repository: newRepository,
 	}
