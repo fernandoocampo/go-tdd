@@ -129,6 +129,12 @@ func NewEmailNotifierMock() *emailNotifierMock {
 	}
 }
 
+func NewEmailNotifierMockWithError(err error) *emailNotifierMock {
+	newEmailNotifierMock := NewEmailNotifierMock()
+	newEmailNotifierMock.err = err
+	return newEmailNotifierMock
+}
+
 // Notify adds the given message to the messages map contained in the mock.
 func (e *emailNotifierMock) Notify(ctx context.Context, message domain.Message) error {
 	if e.err != nil {
