@@ -2,6 +2,7 @@ package employeeapp_test
 
 import (
 	"context"
+	"sync"
 	"testing"
 
 	"github.com/fernandoocampo/go-tdd/pkg/domain"
@@ -72,7 +73,9 @@ func TestEmailNotification(t *testing.T) {
 	basicService := employeeapp.NewBasicServiceWithNotifier(newRepo, emailNotifier)
 
 	// WHEN
+	emailNotifier.wg.Add(1)
 	_, err := basicService.Add(ctx, newEmployee)
+	emailNotifier.wg.Wait()
 	// THEN
 	if err != nil {
 		t.Errorf("no error was expected but got: %q", err)
@@ -121,6 +124,7 @@ func aEmployeeRepoMock() domain.EmployeeRepository {
 type emailNotifierMock struct {
 	err      error
 	messages []domain.Message
+	wg       sync.WaitGroup
 }
 
 func NewEmailNotifierMock() *emailNotifierMock {
@@ -137,6 +141,7 @@ func NewEmailNotifierMockWithError(err error) *emailNotifierMock {
 
 // Notify adds the given message to the messages map contained in the mock.
 func (e *emailNotifierMock) Notify(ctx context.Context, message domain.Message) error {
+	defer e.wg.Done()
 	if e.err != nil {
 		return e.err
 	}
