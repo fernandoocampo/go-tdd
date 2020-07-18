@@ -16,26 +16,52 @@ import (
 )
 
 func TestCreateAEmployee(t *testing.T) {
+	// GIVEN
 	service := new(testifyMock)
 	service.On("Add", mock.AnythingOfType("*context.timerCtx"), mock.AnythingOfType("Employee")).Return("1", nil)
 	employeehandler := web.NewEmployeeRestHandler(service)
 
 	strjson := string(loadTestFixturesObjects(t, "the_hound_employee.json"))
-	req, errreq := http.NewRequest("POST", "/employees", bytes.NewBuffer([]byte(strjson)))
-
-	if errreq != nil {
-		t.Fatal(errreq)
-	}
+	req := httptest.NewRequest("POST", "/employees", bytes.NewBuffer([]byte(strjson)))
 
 	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
 	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/employees", employeehandler.Create).Methods("POST")
 
-	// When client consumes a rest api.
+	// WHEN client consumes a rest api.
 	r.ServeHTTP(rr, req)
 
-	// Then we check the result of the employee found.
+	// THEN we check the result of the employee found.
+	service.AssertExpectations(t)
+	// Check the status code is what we expect.
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+
+func TestCreateAEmployeeServer(t *testing.T) {
+	// GIVEN
+	service := new(testifyMock)
+	service.On("Add", mock.AnythingOfType("*context.timerCtx"), mock.AnythingOfType("Employee")).Return("1", nil)
+	employeehandler := web.NewEmployeeRestHandler(service)
+
+	strjson := string(loadTestFixturesObjects(t, "the_hound_employee.json"))
+	req := httptest.NewRequest("POST", "/employees", bytes.NewBuffer([]byte(strjson)))
+
+	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
+	rr := httptest.NewRecorder()
+	r := mux.NewRouter()
+	r.HandleFunc("/employees", employeehandler.Create).Methods("POST")
+
+	ts := httptest.NewServer(r)
+	defer ts.Close()
+
+	// WHEN client consumes a rest api.
+	r.ServeHTTP(rr, req)
+
+	// THEN we check the result of the employee found.
 	service.AssertExpectations(t)
 	// Check the status code is what we expect.
 	if status := rr.Code; status != http.StatusOK {

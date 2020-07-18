@@ -1,0 +1,25 @@
+mode: set
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:4.46,5.46 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:8.2,8.48 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:12.2,12.28 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:15.2,15.30 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:18.2,18.70 1 0
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:5.46,7.3 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:8.48,10.3 1 0
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:12.28,14.3 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:15.30,17.3 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:21.45,22.9 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:23.30,24.19 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:25.32,26.21 1 1
+github.com/fernandoocampo/go-tdd/pkg/domain/greeting.go:27.10,28.19 1 0
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/employee.go:19.86,23.2 1 1
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/employee.go:26.77,38.50 6 1
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/employee.go:43.2,45.16 3 1
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/employee.go:49.2,49.51 1 1
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/employee.go:38.50,41.3 2 0
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/employee.go:45.16,48.3 2 0
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/respond.go:17.76,19.2 1 0
+github.com/fernandoocampo/go-tdd/pkg/adapter/web/respond.go:22.80,29.2 5 1
+github.com/fernandoocampo/go-tdd/pkg/employeeapp/basic.go:16.86,20.2 1 1
+github.com/fernandoocampo/go-tdd/pkg/employeeapp/basic.go:23.102,27.2 3 1
+github.com/fernandoocampo/go-tdd/pkg/port/newemployee.go:28.54,46.2 1 1

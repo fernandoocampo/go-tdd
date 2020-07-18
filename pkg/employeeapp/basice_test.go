@@ -77,7 +77,8 @@ func aNewEmployeeDaenerys() domain.Employee {
 
 // aEmployeeRepoMock creates a mock from employee repository interface.
 func aEmployeeRepoMock() domain.EmployeeRepository {
-	t := &struct{ protoRepo }{}
+	t := &protoRepo{}
+	// t := &struct{ protoRepo }{}
 
 	t.data = make(map[string]*domain.Employee)
 	t.queryByID = func(ctx context.Context, ID string) (*domain.Employee, error) {

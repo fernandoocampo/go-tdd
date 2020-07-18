@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/fernandoocampo/go-tdd/pkg/domain"
 	"github.com/stretchr/testify/assert"
@@ -34,6 +35,7 @@ func TestNewEmployeeAsEmployee(t *testing.T) {
 			},
 		}
 		// WHEN
+		time.Sleep(1 * time.Second)
 		got := newEmployee.AsEmployee()
 		// THEN
 		assert.Equal(t, want, got)
@@ -59,6 +61,7 @@ func TestNewEmployeeAsEmployee(t *testing.T) {
 			},
 		}
 		// WHEN
+		time.Sleep(1 * time.Second)
 		got := newEmployee.AsEmployee()
 		// THEN
 		assert.Equal(t, want, got)
